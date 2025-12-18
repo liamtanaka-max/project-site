@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Number Guessing Game</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body {
+      background-color: #eef6ff;
+      font-family: Arial, Helvetica, sans-serif;
+      color: #1f2933;
+      margin: 0;
+      padding: 0;
+    }
+
+    .app {
+      max-width: 500px;
+      margin: 80px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      border: 1px solid rgba(0,0,0,.15);
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #555;
+    }
+
+    input {
+      width: 80px;
+      padding: 8px;
+      font-size: 1.1em;
+      text-align: center;
+    }
+
+    button {
+      padding: 8px 14px;
+      margin-left: 6px;
+      font-size: 1em;
+      cursor: pointer;
+      border-radius: 6px;
+      border: 1px solid #2563eb;
+      background-color: #2563eb;
+      color: white;
+    }
+
+    button:hover {
+      background-color: #1d4ed8;
+    }
+
+    .feedback {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    .small {
+      font-size: 0.9em;
+      color: #555;
+      margin-top: 20px;
+    }
+
+    a {
+      color: #2563eb;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="app">
+    <h1>Number Guessing Game</h1>
+    <p>
+      I’m thinking of a number between <strong>1 and 100</strong>.
+      Can you guess it?
+    </p>
+
+    <div>
+      <input type="number" id="guess" min="1" max="100">
+      <button onclick="checkGuess()">Guess</button>
+    </div>
+
+    <div class="feedback" id="feedback"></div>
+
+    <button onclick="resetGame()" style="margin-top:15px;">Restart</button>
+
+    <div class="small">
+      <p>
+        This mini app was built with help from AI and then edited and styled by me.
+      </p>
+      <p>
+        <a href="scratch.html">← Back to scratch page</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    let secretNumber = Math.floor(Math.random() * 100) + 1;
+    let attempts = 0;
+
+    function checkGuess() {
+      const guessInput = document.getElementById("guess");
+      const feedback = document.getElementById("feedback");
+      const userGuess = Number(guessInput.value);
+
+      if (!userGuess || userGuess < 1 || userGuess > 100) {
+        feedback.textContent = "Enter a number between 1 and 100.";
+        return;
+      }
+
+      attempts++;
+
+      if (userGuess === secretNumber) {
+        feedback.textContent =
+          "Correct! 🎉 You guessed it in " + attempts + " tries.";
+      } else if (userGuess < secretNumber) {
+        feedback.textContent = "Too low. Try again!";
+      } else {
+        feedback.textContent = "Too high. Try again!";
+      }
+
+      guessInput.value = "";
+      guessInput.focus();
+    }
+
+    function resetGame() {
+      secretNumber = Math.floor(Math.random() * 100) + 1;
+      attempts = 0;
+      document.getElementById("feedback").textContent = "";
+      document.getElementById("guess").value = "";
+    }
+  </script>
+
+</body>
+</html>
